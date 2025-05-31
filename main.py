@@ -1,4 +1,5 @@
-from Libs.Machine import Vending_Machine
+from Libs.Machine import VendingMachine
+from Libs import Display
 
 import Libs.Machine
 items_list = ['아이시스 8.0','아이시스 8.0','2% 아쿠아 제로','레몬워터','레몬워터','옥수수 수염차','옥수수 수염차','옥수수 수염차','트레비'
@@ -7,8 +8,10 @@ items_list = ['아이시스 8.0','아이시스 8.0','2% 아쿠아 제로','레�
 #10
 #20
 #30
-m=Vending_Machine()
-m.add_1000()
+m=VendingMachine()
+m.add_cash(1000)
 m.item_out(7)
-m.add_1000()
+m.add_cash(1000)
 m.item_out(7)
+m.now_cash()
+#Display.temp()
