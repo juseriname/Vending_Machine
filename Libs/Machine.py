@@ -41,6 +41,26 @@ class VendingMachine(Drink):
             temp[0] = self._cash//1000
             self._cash %= 1000
 
+        if self._cash > self._SmallChange[1] * 500:
+            temp[1] = self._SmallChange[1]
+            self._cash -= self._SmallChange[1] * 500
+        else:
+            temp[1] = self._cash // 500
+            self._cash %= 500
+
+        if self._cash > self._SmallChange[2] * 100:
+            temp[2] = self._SmallChange[2]
+            self._cash -= self._SmallChange[2] * 100
+        else:
+            temp[2] = self._cash // 100
+            self._cash %= 100
+
+        if self._cash > self._SmallChange[3] * 50:
+            temp[3] = self._SmallChange[3]
+            self._cash -= self._SmallChange[3] * 50
+        else:
+            temp[3] = self._cash // 50
+            self._cash %= 50
         return temp
 
     def get_cash(self): #현재 잔액 가져오기
