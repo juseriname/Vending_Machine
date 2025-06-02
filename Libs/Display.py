@@ -1,3 +1,4 @@
+import tkinter
 from tkinter import *
 from Libs.Machine import VendingMachine
 
@@ -12,13 +13,27 @@ items=[]
 for i in range(21):
     items.append(m.get_item_info(i)) #name, price, count
 
+def get_password():
+    login_window = tkinter.Toplevel(root)
+    login_window.title("관리자 로그인")
+    login_info = tkinter.Label(login_window,text="비밀번호를 입력해 주세요.")
+    login_info.pack()
+    txt = entry.get() #textbox 입력받기.
+    btn1 = Button(login_window,text="확인",command=)
+    return txt
 
 ####################### 관리자 페이지
 editing = False
 def login():
-    ans = input() #textbox 로 입력받기
+    ans = get_password()
     global editing
     editing = m.login(ans)
+    if editing:
+        pass
+        #관리자 페이지 들어가기
+    else:
+        pass
+        #비밀번호가 다릅니다! 경고창 띄우기.
     print(editing)
 
 menu = Menu(root)

@@ -8,6 +8,7 @@
 - 어드민 페이지 구현 (-)
   - 2.0 메뉴를 통해서 어드민 페이지 진입 (-)
   - 2.1 로그인 페이지 구현 (-)
+  - 추가 창 띄우기 : https://toypapa.tistory.com/entry/Python-Tkinter%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-%EB%8B%A4%EC%A4%91-%EC%B0%BD-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EB%A7%8C%EB%93%A4%EA%B8%B0
   - 2.2 제품 명 수정 구현 (-)
   - 2.3 제품 가격 수정 구현 (-)
   - 2.4 제품 갯수 수정 구현 (-)

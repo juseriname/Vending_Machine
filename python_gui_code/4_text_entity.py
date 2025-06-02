@@ -4,7 +4,7 @@ root = Tk()
 root.title('Application')
 root.geometry("480x640")
 
-txt = Text(root, width = 30, height = 5)
+txt = Text(root, width = 30, height = 1)
 txt.pack()
 txt.insert(END, '글자를 입력하세요')
 
