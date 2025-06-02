@@ -75,9 +75,12 @@ class VendingMachine(Drink):
                 self._cash-=self.items_price[index-1]
                 self.items_count[index-1]-=1
                 print(f'{self.items_list[index-1]}를 샀어요.')
+                #return 2 #succes
             else:
+                #return 1 #no money
                 print('돈이 부족합니다.')
         else:
+            #return -1 #no items #아예 안눌리게 해야함
             print('재고가 없습니다.')
 
     def item_out_card(self,index): #카드결제

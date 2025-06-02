@@ -1,4 +1,3 @@
-from shutil import register_unpack_format
 from tkinter import *
 from Libs.Machine import VendingMachine
 
@@ -13,6 +12,24 @@ items=[]
 for i in range(21):
     items.append(m.get_item_info(i)) #name, price, count
 
+
+####################### 관리자 페이지
+editing = False
+def login():
+    ans = input() #textbox 로 입력받기
+    global editing
+    editing = m.login(ans)
+    print(editing)
+
+menu = Menu(root)
+menu_admin = Menu(menu,tearoff=0)
+menu_admin.add_command(label = 'Login',command=login)
+menu.add_cascade(label = '관리자 전용', menu = menu_admin)
+
+
+
+
+###################### 기계 동작하는 부분
 def buy1():
     m.item_out(1)
     refresh()
@@ -109,16 +126,16 @@ def refund():
 
 
 def refresh():
-    now_cash = Label(root, text=f'현재 잔액 : {m.get_cash()}원')
+    now_cash = Label(root, text=f'현재 잔액 : {m.get_cash()}원',anchor='w',width=15,height=1)
     now_cash.grid(row=1, column=11)
 
-    user_cash1 = Label(root,text=f'1000원 : {cashs[0]}개')
+    user_cash1 = Label(root,text=f'1000원 : {cashs[0]}개',anchor='w',width=15,height=1)
     user_cash1.grid(row=2,column=11)
-    user_cash2 = Label(root,text=f'500원 : {cashs[1]}개')
+    user_cash2 = Label(root,text=f'500원 : {cashs[1]}개',anchor='w',width=15,height=1)
     user_cash2.grid(row=3,column=11)
-    user_cash3 = Label(root,text=f'100원 : {cashs[2]}개')
+    user_cash3 = Label(root,text=f'100원 : {cashs[2]}개',anchor='w',width=15,height=1)
     user_cash3.grid(row=4,column=11)
-    user_cash4 = Label(root,text=f'50원 : {cashs[3]}개')
+    user_cash4 = Label(root,text=f'50원 : {cashs[3]}개',anchor='w',width=15,height=1)
     user_cash4.grid(row=5,column=11)
 
 
@@ -215,8 +232,10 @@ btn24 = Button(root, text='50원 투입',command=add_cash4,width=10,height=1)
 btn24.grid(row=5,column=4)
 btn25 = Button(root, text='환급 받기',command=refund,width=10,height=1)
 btn25.grid(row=5,column=5)
-refresh()
 
+
+refresh()
+root.config(menu = menu)
 root.mainloop()
 
 #https://blog.naver.com/dsz08082/221420576638
