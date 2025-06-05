@@ -14,20 +14,40 @@ for i in range(21):
     items.append(m.get_item_info(i)) #name, price, count
 
 def get_password():
+    global editing
+    in_password = ''
+
+    def comfirm():
+        global editing
+        global in_password
+        in_password = txt.get()
+        if m.login(in_password):
+            editing=1
+        print(in_password,editing)
+        login_window.destroy()
+
     login_window = tkinter.Toplevel(root)
     login_window.title("관리자 로그인")
+    login_window.geometry("200x80")
+
     login_info = tkinter.Label(login_window,text="비밀번호를 입력해 주세요.")
     login_info.pack()
-    txt = entry.get() #textbox 입력받기.
-    btn1 = Button(login_window,text="확인",command=)
-    return txt
+
+    txt = Entry(login_window, width=30) #textbox 입력받기.
+    txt.pack()
+
+    #Todo
+    check_button = Button(login_window,text="확인",command=comfirm,width=8,height=1)
+    check_button.pack()
 
 ####################### 관리자 페이지
 editing = False
 def login():
-    ans = get_password()
     global editing
-    editing = m.login(ans)
+    #왜 ans가 값 받아오는걸 안기다리지? #async await 으로 비동기? 안되는데? #아예 위에서 비번 확인하자
+    get_password()
+    print('yes' if editing else 'no')
+
     if editing:
         pass
         #관리자 페이지 들어가기
@@ -38,15 +58,15 @@ def login():
 
 menu = Menu(root)
 menu_admin = Menu(menu,tearoff=0)
-menu_admin.add_command(label = 'Login',command=login)
+menu_admin.add_command(label = 'Login',command=get_password)
 menu.add_cascade(label = '관리자 전용', menu = menu_admin)
 
 
 
 
 ###################### 기계 동작하는 부분
-def buy1():
-    m.item_out(1)
+def buy1(arg):
+    m.item_out(arg)
     refresh()
 def buy2():
     m.item_out(2)
@@ -155,7 +175,7 @@ def refresh():
 
 
 
-btn1 = Button(root, text=items[0][0],command=buy1, width=15,height=1)
+btn1 = Button(root, text=items[0][0],command=lambda :(buy1(0)), width=15,height=1)
 btn1.grid(row=1,column=1)
 btn2 = Button(root, text=items[1][0],command=buy2, width=15,height=1)
 btn2.grid(row=1,column=2)
