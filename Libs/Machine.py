@@ -75,26 +75,26 @@ class VendingMachine(Drink):
 
     #제품 관련
     def item_out(self,index): #현금결제
-        if self.items_count[index-1] > 0:
-            if self._cash >= self.items_price[index-1]:
-                print(f'{self._cash} -> {self._cash-self.items_price[index-1]}')
-                self._cash-=self.items_price[index-1]
-                self.items_count[index-1]-=1
-                print(f'{self.items_list[index-1]}를 샀어요.')
-                #return 2 #succes
+        if self.items_count[index] != 0:
+            if self._cash >= self.items_price[index]:
+                print(f'{self._cash} -> {self._cash-self.items_price[index]}')
+                self._cash-=self.items_price[index]
+                self.items_count[index]-=1
+                print(f'{self.items_list[index]}를 샀어요.')
+                return 2 #succes
             else:
-                #return 1 #no money
-                print('돈이 부족합니다.')
+                print(index, '돈이 부족합니다.')
+                return 1 #no money
         else:
-            #return -1 #no items #아예 안눌리게 해야함
             print('재고가 없습니다.')
+            return -1 #no items #아예 안눌리게 해야함
 
     def item_out_card(self,index): #카드결제
-        self.items_count[index - 1] -= 1
-        print(f'{self.items_list[index - 1]}를 샀어요.')
+        self.items_count[index] -= 1
+        print(f'{self.items_list[index]}를 샀어요.')
 
     def get_item_info(self,index):
-        temp = [self.items_list[index-1],self.items_price[index-1],self.items_count[index-1]]
+        temp = [self.items_list[index],self.items_price[index],self.items_count[index]]
         return temp
 
     #관리자 페이지
@@ -107,13 +107,13 @@ class VendingMachine(Drink):
             return False
     ##제품 이름 수정
     def change_name(self,index,sub):
-        self.items_list[index-1] = sub
+        self.items_list[index] = sub
     ##제품 가격 수정
     def change_price(self,index,sub):
-        self.items_price[index-1] = sub
+        self.items_price[index] = sub
     ##제품 개수 수정
     def change_count(self,index,value):
-        self.items_count[index-1]+=value
+        self.items_count[index]+=value
     ##잔돈 수정
     def change_smallchange(self,value):
         pass
