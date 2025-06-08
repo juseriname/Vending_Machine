@@ -24,11 +24,11 @@ def get_password():
     def comfirm():
         global editing
         in_password = txt.get()
+        login_window.destroy()
         if m.login(in_password): #비밀번호 맞음?
             editing=True #관리자 권한 있음
             admin_page() #관리자 페이지 들어가기
-        print(in_password,editing)
-        login_window.destroy()
+        #print(in_password,editing)
         editing=False #관리자 권한 없음
 
     login_window = tkinter.Toplevel(root)
@@ -52,8 +52,86 @@ def admin_page():
     admin_window.geometry("1400x700")
 
     #index.Name[변경],Price[변경],Count[변경]
-    La = Label(admin_window,)
-    La.mainloop()
+    #Columns
+    column_name = Label(admin_window,text="제품 이름",width=15,height=1)
+    column_name.grid(row=1,column=2)
+
+    column_price = Label(admin_window, text="제품 가격",width=15,height=1)
+    column_price.grid(row=1, column=5)
+
+    column_count = Label(admin_window, text="제품 수량",width=15,height=1)
+    column_count.grid(row=1, column=6)
+    #Index
+    def adm_draw_index():
+        ind1 = Label(admin_window, text="1.", width=2, height=1)
+        ind1.grid(row=2, column=1)
+        ind2 = Label(admin_window, text="2.", width=2, height=1)
+        ind2.grid(row=3, column=1)
+        ind3 = Label(admin_window, text="3.", width=2, height=1)
+        ind3.grid(row=4, column=1)
+        ind4 = Label(admin_window, text="4.", width=2, height=1)
+        ind4.grid(row=5, column=1)
+        ind5 = Label(admin_window, text="5.", width=2, height=1)
+        ind5.grid(row=6, column=1)
+        ind6 = Label(admin_window, text="6.", width=2, height=1)
+        ind6.grid(row=7, column=1)
+        ind7 = Label(admin_window, text="7.", width=2, height=1)
+        ind7.grid(row=8, column=1)
+        ind8 = Label(admin_window, text="8.", width=2, height=1)
+        ind8.grid(row=9, column=1)
+        ind9 = Label(admin_window, text="9.", width=2, height=1)
+        ind9.grid(row=10, column=1)
+        ind10 = Label(admin_window, text="10.", width=2, height=1)
+        ind10.grid(row=11, column=1)
+        ind11 = Label(admin_window, text="11.", width=2, height=1)
+        ind11.grid(row=12, column=1)
+        ind12 = Label(admin_window, text="12.", width=2, height=1)
+        ind12.grid(row=13, column=1)
+        ind13 = Label(admin_window, text="13.", width=2, height=1)
+        ind13.grid(row=14, column=1)
+        ind14 = Label(admin_window, text="14.", width=2, height=1)
+        ind14.grid(row=15, column=1)
+        ind15 = Label(admin_window, text="15.", width=2, height=1)
+        ind15.grid(row=16, column=1)
+        ind16 = Label(admin_window, text="16.", width=2, height=1)
+        ind16.grid(row=17, column=1)
+        ind17 = Label(admin_window, text="17.", width=2, height=1)
+        ind17.grid(row=18, column=1)
+        ind18 = Label(admin_window, text="18.", width=2, height=1)
+        ind18.grid(row=19, column=1)
+        ind19 = Label(admin_window, text="19.", width=2, height=1)
+        ind19.grid(row=20, column=1)
+        ind20 = Label(admin_window, text="20.", width=2, height=1)
+        ind20.grid(row=21, column=1)
+        ind21 = Label(admin_window, text="21.", width=2, height=1)
+        ind21.grid(row=22, column=1)
+        ind22 = Label(admin_window, text="22.", width=2, height=1)
+        ind22.grid(row=23, column=1)
+        ind23 = Label(admin_window, text="23.", width=2, height=1)
+        ind23.grid(row=24, column=1)
+        ind24 = Label(admin_window, text="24.", width=2, height=1)
+        ind24.grid(row=25, column=1)
+        ind25 = Label(admin_window, text="25.", width=2, height=1)
+        ind25.grid(row=26, column=1)
+        ind26 = Label(admin_window, text="26.", width=2, height=1)
+        ind26.grid(row=27, column=1)
+        ind27 = Label(admin_window, text="27.", width=2, height=1)
+        ind27.grid(row=28, column=1)
+        ind28 = Label(admin_window, text="28.", width=2, height=1)
+        ind28.grid(row=29, column=1)
+        ind29 = Label(admin_window, text="29.", width=2, height=1)
+        ind29.grid(row=30, column=1)
+        ind30 = Label(admin_window, text="30.", width=2, height=1)
+        ind30.grid(row=31, column=1)
+    adm_draw_index()
+    #Names
+    def adm_draw_name():
+        #입력창 그리기 #Todo
+        global items
+        name1 = Entry(admin_window,width=15)
+        name1.grid(row=2,column=2)
+        name1.insert(END,items[0]['name'])
+    adm_draw_name()
 ####################### 결제 방식 변경
 pay_method=False # False -> 현금, True-> 카드
 def change_pay_method():
