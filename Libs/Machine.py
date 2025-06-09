@@ -1,20 +1,14 @@
 class Drink:
-    def __init__(self):
-        self.items_list = ['아이시스 8.0', '아이시스 8.0', '2% 아쿠아 제로', '레몬워터', '레몬워터', '옥수수 수염차', '옥수수 수염차', '옥수수 수염차', '트레비','트레비'
-            , '펩시 제로', '펩시', '칠성사이다 제로', '칠성사이다', '망고', '망고', 'Liptea 복숭아', '스퀴즈 사과에이드', '스퀴즈 사과에이드', '스퀴즈 포도에이드'
-            , '가나초코', '레쓰비', '핫6 제로', '밀키스','핫6', '레쓰비 카페타임', '게토레이 레몬향', '게토레이 레몬향', '코코 포도', '잔치집 식혜']
+    def __init__(self,names,price,count):
+        self.items_list = names
 
-        self.items_price = [800, 800, 2000, 1800, 1800, 1600, 1600, 2200, 1300, 1300
-            , 1100, 1100, 1300, 1300, 1200, 1200, 1200, 1100, 1100, 1100
-            , 900, 900, 1300, 1100, 1300, 1200, 1000, 1000, 1000, 1000]
+        self.items_price = price
 
-        self.items_count = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10
-            , 10, 10, 10, 10, 10, 10, 10, 10, 10, 10
-            , 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+        self.items_count = count
 
 class VendingMachine(Drink):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,names,price,count):
+        super().__init__(names,price,count)
         self._cash = 0 #총 잔돈
         self._SmallChange=[10,10,10,10] #잔돈 1000 500 100 50
 
@@ -87,11 +81,16 @@ class VendingMachine(Drink):
                 return 1 #no money
         else:
             print('재고가 없습니다.')
-            return -1 #no items #아예 안눌리게 해야함
+            return -1 #no items
 
     def item_out_card(self,index): #카드결제
-        self.items_count[index] -= 1
-        print(f'{self.items_list[index]}를 샀어요.')
+        if self.items_count[index] != 0:
+            self.items_count[index] -= 1
+            print(f'{self.items_list[index]}를 샀어요.')
+            return 2
+        else :
+            return -1
+
 
     def get_item_info(self,index):
         temp = [self.items_list[index],self.items_price[index],self.items_count[index]]
