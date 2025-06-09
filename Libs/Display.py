@@ -13,14 +13,9 @@ m = VendingMachine(['아이시스 8.0', '아이시스 8.0', '2% 아쿠아 제로
                        ,[800, 800, 2000, 1800, 1800, 1600, 1600, 2200, 1300, 1300, 1100, 1100, 1300, 1300, 1200, 1200, 1200, 1100, 1100, 1100, 900, 900, 1300, 1100, 1300, 1200, 1000, 1000, 1000, 1000]
                        ,[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10])
 cash = [20,20,20,20] #사용자가 가지고 있는 현금
-items=[]
 def __init__():
-    global items,m
-    #
-    # for i in range(0,30):
-    #     temp = m.get_item_info(i)
-    #     items.append({'name':temp[0],'price':temp[1],'count':temp[2]}) #name, price, count
-
+    pass
+    #여기다가 값 초기화같은걸 넣어야하지 않을까
 def get_password():
     global editing
 
@@ -41,7 +36,7 @@ def get_password():
     login_info = tkinter.Label(login_window,text="비밀번호를 입력해 주세요.")
     login_info.pack()
 
-    txt = Entry(login_window, width=30) #textbox로 입력받기.
+    txt = Entry(login_window, width=30) #비밀번호 입력받기.
     txt.pack()
 
     check_button = Button(login_window,text="확인",command=comfirm,width=8,height=1)
@@ -54,8 +49,8 @@ def admin_page():
     admin_windows.title("관리자 페이지")
     admin_windows.geometry("700x1100")
     admin_windows.resizable(False,True)
-    # Create canvas + scrollbar
-    canvas = Canvas(admin_windows, width=680, height=700)
+    #canvas + scrollbar 만들기
+    canvas = Canvas(admin_windows, width=700, height=700)
     scrollbar = Scrollbar(admin_windows, orient="vertical", command=canvas.yview)
     canvas.configure(yscrollcommand=scrollbar.set)
 
@@ -656,7 +651,6 @@ def admin_page():
     adm_count_actions()
 
     Label(admin_window, text="").grid(row=40, column=0, pady=100)  # 스크롤 끝 여백 추가
-
 
 ####################### 결제 방식 변경
 pay_method=False # False -> 현금, True-> 카드
