@@ -51,10 +51,10 @@ def get_password():
 def admin_page():
     admin_windows = tkinter.Toplevel(root)
     admin_windows.title("관리자 페이지")
-    admin_windows.geometry("700x1100")
+    admin_windows.geometry("800x1100")
     admin_windows.resizable(False,True)
     #canvas + scrollbar 만들기
-    canvas = Canvas(admin_windows, width=700, height=700)
+    canvas = Canvas(admin_windows, width=800, height=700)
     scrollbar = Scrollbar(admin_windows, orient="vertical", command=canvas.yview)
     canvas.configure(yscrollcommand=scrollbar.set)
 
@@ -68,7 +68,7 @@ def admin_page():
     )
     canvas.create_window((0, 0), window=admin_window, anchor="nw") #캔버스 어디다 소환하꺼야 -> (0,0)왼쪽 위에 소환할거야
     #스크롤바 넣기: https://toypapa.tistory.com/entry/Python-Tkinter-Scroll-%EC%8A%A4%ED%81%AC%EB%A1%A4-%EC%82%AC%EC%9A%A9%EB%B2%95
-
+    Button(admin_window,text='종료',command=lambda :(admin_windows.destroy()),width=3,height=1).grid(row=1,column=1)
     #Columns
     def adm_draw_column():
         column_name = Label(admin_window,text="제품 이름",width=20,height=1)
