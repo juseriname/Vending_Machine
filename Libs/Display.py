@@ -543,9 +543,6 @@ def admin_page():
     Label(admin_window,text="").grid(row=33,column=0)
     #기계 내 잔돈 관리
     def adm_draw_sm():
-        def act_sm(index,value):
-            m.change_smallchange(index,value)
-            adm_draw_index()
         sm = m.get_smallchange()
         Label(admin_window,text="거스름돈 개수",width=15,anchor='w').grid(row=34,column=2)
         sm1 = Label(admin_window,text=f"1000원 {sm[0]}개",width=15,anchor='w')
@@ -556,7 +553,10 @@ def admin_page():
         sm3.grid(row=37,column=2)
         sm4 = Label(admin_window,text=f"50원 {sm[3]}개",width=15,anchor='w')
         sm4.grid(row=38,column=2)
-
+    def adm_action_sm():
+        def act_sm(index,value):
+            m.change_smallchange(index,value)
+            adm_draw_sm()
         smbtp1 = Button(admin_window,text='+1개',command=lambda :(act_sm(0,1)),width=5,height=1)
         smbtp1.grid(row=35,column=3)
         smbtp2 = Button(admin_window, text='+1개', command=lambda: (act_sm(1, 1)), width=5, height=1)
@@ -575,6 +575,7 @@ def admin_page():
         smbtm4 = Button(admin_window, text='-1개', command=lambda: (act_sm(3, -1)), width=5, height=1)
         smbtm4.grid(row=38, column=4)
     adm_draw_sm()
+    adm_action_sm()
     Label(admin_window, text="").grid(row=40, column=0, pady=100)  # 스크롤 끝 여백 추가
 ####################### 결제 방식 변경
 pay_method=False # False -> 현금, True-> 카드

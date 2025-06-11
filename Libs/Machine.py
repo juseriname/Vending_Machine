@@ -118,5 +118,8 @@ class VendingMachine(Drink):
         return self._SmallChange
     ##잔돈 수정
     def change_smallchange(self,index,value):
-        self._SmallChange[index]+=value
+        if self._SmallChange[index] == 0:
+            pass
+        else:
+            self._SmallChange[index]+=value
 
