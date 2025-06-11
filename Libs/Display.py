@@ -68,6 +68,7 @@ def admin_page():
     )
     canvas.create_window((0, 0), window=admin_window, anchor="nw") #캔버스 어디다 소환하꺼야 -> (0,0)왼쪽 위에 소환할거야
     #스크롤바 넣기: https://toypapa.tistory.com/entry/Python-Tkinter-Scroll-%EC%8A%A4%ED%81%AC%EB%A1%A4-%EC%82%AC%EC%9A%A9%EB%B2%95
+    #어드민 창 종료버튼
     Button(admin_window,text='종료',command=lambda :(admin_windows.destroy()),width=3,height=1).grid(row=1,column=1)
     #Columns
     def adm_draw_column():
