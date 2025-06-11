@@ -60,7 +60,7 @@ class VendingMachine(Drink):
         else:
             temp[3] = self._cash // 50
             self._cash %= 50
-        print('_SmallChange: ',self._SmallChange)
+        #print('_SmallChange: ',self._SmallChange)
         return temp
 
     def get_cash(self): #현재 잔액 가져오기
@@ -109,11 +109,14 @@ class VendingMachine(Drink):
         self.items_list[index] = sub
     ##제품 가격 수정
     def change_price(self,index,sub):
-        self.items_price[index] = sub
+        self.items_price[index] = int(sub)
     ##제품 개수 수정
     def change_count(self,index,value):
         self.items_count[index]+=value
+    ##잔돈 개수 받기
+    def get_smallchange(self):
+        return self._SmallChange
     ##잔돈 수정
-    def change_smallchange(self,value):
-        pass
+    def change_smallchange(self,index,value):
+        self._SmallChange[index]+=value
 

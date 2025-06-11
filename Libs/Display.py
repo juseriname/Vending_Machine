@@ -1,7 +1,6 @@
 import tkinter
 from tkinter import *
 import tkinter.messagebox as msgbox
-
 from Libs.Machine import VendingMachine
 
 root = Tk()
@@ -14,7 +13,13 @@ m = VendingMachine(['아이시스 8.0', '아이시스 8.0', '2% 아쿠아 제로
                        ,[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10])
 cash = [20,20,20,20] #사용자가 가지고 있는 현금
 def __init__():
-    pass
+    add_menu()
+    draw_btn()
+    draw_price()
+    draw_func()
+    draw_money()
+    root.config(menu=menu)
+    root.mainloop()
     #여기다가 값 초기화같은걸 넣어야하지 않을까
 def get_password():
     global editing
@@ -41,7 +46,6 @@ def get_password():
 
     check_button = Button(login_window,text="확인",command=comfirm,width=8,height=1)
     check_button.pack()
-
 ####################### 관리자 페이지
 editing = False
 def admin_page():
@@ -70,7 +74,7 @@ def admin_page():
         column_name = Label(admin_window,text="제품 이름",width=20,height=1)
         column_name.grid(row=1,column=2)
 
-        column_price = Label(admin_window, text="제품 가격",width=20,height=1)
+        column_price = Label(admin_window, text="제품 가격(원)",width=20,height=1)
         column_price.grid(row=1, column=5)
 
         column_count = Label(admin_window, text="제품 수량",width=20,height=1)
@@ -649,9 +653,44 @@ def admin_page():
         down30.grid(row=31, column=down_column)
     adm_draw_count()
     adm_count_actions()
+    #공백 생성
+    Label(admin_window,text="").grid(row=32,column=0)
+    Label(admin_window,text="").grid(row=33,column=0)
+    #기계 내 잔돈 관리
+    def adm_draw_sm():
+        def act_sm(index,value):
+            m.change_smallchange(index,value)
+            adm_draw_index()
+        sm = m.get_smallchange()
+        Label(admin_window,text="거스름돈 개수",width=15,anchor='w').grid(row=34,column=2)
+        sm1 = Label(admin_window,text=f"1000원 {sm[0]}개",width=15,anchor='w')
+        sm1.grid(row=35,column=2)
+        sm2 = Label(admin_window,text=f"500원 {sm[1]}개",width=15,anchor='w')
+        sm2.grid(row=36,column=2)
+        sm3 = Label(admin_window,text=f"100원 {sm[2]}개",width=15,anchor='w')
+        sm3.grid(row=37,column=2)
+        sm4 = Label(admin_window,text=f"50원 {sm[3]}개",width=15,anchor='w')
+        sm4.grid(row=38,column=2)
 
+        smbtp1 = Button(admin_window,text='+1개',command=lambda :(act_sm(0,1)),width=5,height=1)
+        smbtp1.grid(row=35,column=3)
+        smbtp2 = Button(admin_window, text='+1개', command=lambda: (act_sm(1, 1)), width=5, height=1)
+        smbtp2.grid(row=36, column=3)
+        smbtp3 = Button(admin_window, text='+1개', command=lambda: (act_sm(2, 1)), width=5, height=1)
+        smbtp3.grid(row=37, column=3)
+        smbtp4 = Button(admin_window, text='+1개', command=lambda: (act_sm(3, 1)), width=5, height=1)
+        smbtp4.grid(row=38, column=3)
+
+        smbtm1 = Button(admin_window, text='-1개', command=lambda: (act_sm(0, -1)), width=5, height=1)
+        smbtm1.grid(row=35, column=4)
+        smbtm2 = Button(admin_window, text='-1개', command=lambda: (act_sm(1, -1)), width=5, height=1)
+        smbtm2.grid(row=36, column=4)
+        smbtm3 = Button(admin_window, text='-1개', command=lambda: (act_sm(2, -1)), width=5, height=1)
+        smbtm3.grid(row=37, column=4)
+        smbtm4 = Button(admin_window, text='-1개', command=lambda: (act_sm(3, -1)), width=5, height=1)
+        smbtm4.grid(row=38, column=4)
+    adm_draw_sm()
     Label(admin_window, text="").grid(row=40, column=0, pady=100)  # 스크롤 끝 여백 추가
-
 ####################### 결제 방식 변경
 pay_method=False # False -> 현금, True-> 카드
 def change_pay_method():
@@ -662,18 +701,16 @@ def change_pay_method():
     else:
         pay_method = True
         msgbox.showinfo("알림", "결제 방식을 카드로 변경하셨습니다.")
-
 ######################### 메뉴바
 menu = Menu(root)
-menu_admin = Menu(menu,tearoff=0)
-menu_admin.add_command(label = 'Login',command=get_password)
-menu.add_cascade(label = '관리자 전용', menu = menu_admin)
-
-menu_pay = Menu(menu,tearoff=0)
-menu_pay.add_checkbutton(label='카드로 결제',command=change_pay_method)
-menu.add_cascade(label='결제 방식',menu= menu_pay)
-
-
+def add_menu():
+    menu_admin = Menu(menu,tearoff=0)
+    menu_admin.add_command(label = 'Login',command=get_password)
+    menu.add_cascade(label = '관리자 전용', menu = menu_admin)
+    
+    menu_pay = Menu(menu,tearoff=0)
+    menu_pay.add_checkbutton(label='카드로 결제',command=change_pay_method)
+    menu.add_cascade(label='결제 방식',menu= menu_pay)
 ###################### 기계 동작하는 부분
 def buy(num): #제품번호가 0부터 시작
     if pay_method:
@@ -687,7 +724,6 @@ def buy(num): #제품번호가 0부터 시작
     else:
         msgbox.showerror("재고 부족",f"재고가 부족합니다.")
     draw_money()
-
 def add_cash(num):
     if cash[num]:
         if num==0:
@@ -700,7 +736,6 @@ def add_cash(num):
             m.add_cash(50)
         cash[num]-=1
         draw_money()
-
 def refund():
     refund_money = m.refund()
     print('환급된 금액: ',refund_money)
@@ -711,7 +746,6 @@ def refund():
         cash[i] += refund_money[i]
     msgbox.showinfo("환급",f"1000원 {refund_money[0]}개\n500원 {refund_money[1]}개\n100원 {refund_money[2]}개\n50원 {refund_money[3]}개\n을 환급했습니다.")
     draw_money()
-
 def draw_money():
     now_cash = Label(root, text=f'현재 잔액 : {m.get_cash()}원',anchor='w',width=15,height=1)
     now_cash.grid(row=1, column=11)
@@ -724,7 +758,6 @@ def draw_money():
     user_cash3.grid(row=4,column=11)
     user_cash4 = Label(root,text=f'50원 : {cash[3]}개',anchor='w',width=15,height=1)
     user_cash4.grid(row=5,column=11)
-
 def draw_btn():
     btn_row=[1,3,5]
     btn1 = Button(root, text=m.items_list[0],command=lambda :(buy(0)), width=15,height=1)
@@ -787,7 +820,6 @@ def draw_btn():
     btn29.grid(row=btn_row[2],column=9)
     btn30 = Button(root, text=m.items_list[29],command=lambda :(buy(29)), width=15,height=1)
     btn30.grid(row=btn_row[2],column=10)
-
 def draw_price():
     price_row=[2,4,6]
     price1 = Label(root, text=str(m.items_price[0])+"원")
@@ -850,7 +882,6 @@ def draw_price():
     price29.grid(row=price_row[2], column=9)
     price30 = Label(root, text=str(m.items_price[29])+"원")
     price30.grid(row=price_row[2], column=10)
-
 def draw_func():
     ins_row=[8] #insert coin
     ins1 = Button(root, text='1000원 투입',command=lambda :(add_cash(0)),width=10,height=1)
@@ -866,12 +897,5 @@ def draw_func():
 
     root.grid_rowconfigure(7,minsize=20) #제품 선택과 돈 투입 버튼 분리하기
 
-__init__()
-draw_btn()
-draw_price()
-draw_func()
-draw_money()
-root.config(menu = menu)
-root.mainloop()
-
-#https://blog.naver.com/dsz08082/221420576638
+def play():
+    __init__()
