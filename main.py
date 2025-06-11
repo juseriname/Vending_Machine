@@ -1,2 +1,2 @@
 import Libs
-Libs.Display.play()
+Libs.Display.__init__()

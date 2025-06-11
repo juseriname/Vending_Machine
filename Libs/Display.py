@@ -896,6 +896,4 @@ def draw_func():
     ins5.grid(row=ins_row[0],column=5)
 
     root.grid_rowconfigure(7,minsize=20) #제품 선택과 돈 투입 버튼 분리하기
-
-def play():
-    __init__()
+__init__()
