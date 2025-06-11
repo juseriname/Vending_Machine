@@ -7,7 +7,7 @@ root = Tk()
 root.title("Vending Machine")
 root.geometry("1400x700")
 root.resizable(False,False)
-
+#제품 정보 정의
 m = VendingMachine(['아이시스 8.0', '아이시스 8.0', '2% 아쿠아 제로', '레몬워터', '레몬워터', '옥수수 수염차', '옥수수 수염차', '옥수수 수염차', '트레비','트레비', '펩시 제로', '펩시', '칠성사이다 제로', '칠성사이다', '망고', '망고', 'Liptea 복숭아', '스퀴즈 사과에이드', '스퀴즈 사과에이드', '스퀴즈 포도에이드', '가나초코', '레쓰비', '핫6 제로', '밀키스','핫6', '레쓰비 카페타임', '게토레이 레몬향', '게토레이 레몬향', '코코 포도', '잔치집 식혜']
                        ,[800, 800, 2000, 1800, 1800, 1600, 1600, 2200, 1300, 1300, 1100, 1100, 1300, 1300, 1200, 1200, 1200, 1100, 1100, 1100, 900, 900, 1300, 1100, 1300, 1200, 1000, 1000, 1000, 1000]
                        ,[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10])
@@ -21,6 +21,8 @@ def __init__():
     root.config(menu=menu)
     root.mainloop()
     #여기다가 값 초기화같은걸 넣어야하지 않을까
+####################### 관리자 페이지
+editing = False
 def get_password():
     global editing
 
@@ -46,8 +48,6 @@ def get_password():
 
     check_button = Button(login_window,text="확인",command=comfirm,width=8,height=1)
     check_button.pack()
-####################### 관리자 페이지
-editing = False
 def admin_page():
     admin_windows = tkinter.Toplevel(root)
     admin_windows.title("관리자 페이지")
@@ -712,40 +712,6 @@ def add_menu():
     menu_pay.add_checkbutton(label='카드로 결제',command=change_pay_method)
     menu.add_cascade(label='결제 방식',menu= menu_pay)
 ###################### 기계 동작하는 부분
-def buy(num): #제품번호가 0부터 시작
-    if pay_method:
-        terms = m.item_out_card(num) #카드결제
-    else:
-        terms = m.item_out(num) #현금결제
-    if terms==2:
-        msgbox.showinfo("제품 구입",f"{m.items_list[num]}을 구입하였습니다.\n재고가 {m.items_count[num]}개 남았습니다.")
-    elif terms==1:
-        msgbox.showwarning("잔액 부족",f"잔액이 부족합니다.")
-    else:
-        msgbox.showerror("재고 부족",f"재고가 부족합니다.")
-    draw_money()
-def add_cash(num):
-    if cash[num]:
-        if num==0:
-            m.add_cash(1000)
-        elif num==1:
-            m.add_cash(500)
-        elif num==2:
-            m.add_cash(100)
-        elif num==3:
-            m.add_cash(50)
-        cash[num]-=1
-        draw_money()
-def refund():
-    refund_money = m.refund()
-    print('환급된 금액: ',refund_money)
-    if refund_money == -1:
-        msgbox.showerror("알람","기계에 잔돈이 부족합니다.\n시설 관리자에게 문의하십시오.")
-        # 기계에 잔돈이 부족합니다. 관리자에게 문의하십시오.
-    for i in range(4):
-        cash[i] += refund_money[i]
-    msgbox.showinfo("환급",f"1000원 {refund_money[0]}개\n500원 {refund_money[1]}개\n100원 {refund_money[2]}개\n50원 {refund_money[3]}개\n을 환급했습니다.")
-    draw_money()
 def draw_money():
     now_cash = Label(root, text=f'현재 잔액 : {m.get_cash()}원',anchor='w',width=15,height=1)
     now_cash.grid(row=1, column=11)
@@ -759,6 +725,18 @@ def draw_money():
     user_cash4 = Label(root,text=f'50원 : {cash[3]}개',anchor='w',width=15,height=1)
     user_cash4.grid(row=5,column=11)
 def draw_btn():
+    def buy(num):  # 제품번호가 0부터 시작
+        if pay_method:
+            terms = m.item_out_card(num)  # 카드결제
+        else:
+            terms = m.item_out(num)  # 현금결제
+        if terms == 2:
+            msgbox.showinfo("제품 구입", f"{m.items_list[num]}을 구입하였습니다.\n재고가 {m.items_count[num]}개 남았습니다.")
+        elif terms == 1:
+            msgbox.showwarning("잔액 부족", f"잔액이 부족합니다.")
+        else:
+            msgbox.showerror("재고 부족", f"재고가 부족합니다.")
+        draw_money()
     btn_row=[1,3,5]
     btn1 = Button(root, text=m.items_list[0],command=lambda :(buy(0)), width=15,height=1)
     btn1.grid(row=btn_row[0],column=1)
@@ -883,6 +861,30 @@ def draw_price():
     price30 = Label(root, text=str(m.items_price[29])+"원")
     price30.grid(row=price_row[2], column=10)
 def draw_func():
+    def add_cash(num):
+        if cash[num]:
+            if num == 0:
+                m.add_cash(1000)
+            elif num == 1:
+                m.add_cash(500)
+            elif num == 2:
+                m.add_cash(100)
+            elif num == 3:
+                m.add_cash(50)
+            cash[num] -= 1
+            draw_money()
+
+    def refund():
+        refund_money = m.refund()
+        print('환급된 금액: ', refund_money)
+        if refund_money == -1:
+            msgbox.showerror("알람", "기계에 잔돈이 부족합니다.\n시설 관리자에게 문의하십시오.")
+            # 기계에 잔돈이 부족합니다. 관리자에게 문의하십시오.
+        for i in range(4):
+            cash[i] += refund_money[i]
+        msgbox.showinfo("환급",
+                        f"1000원 {refund_money[0]}개\n500원 {refund_money[1]}개\n100원 {refund_money[2]}개\n50원 {refund_money[3]}개\n을 환급했습니다.")
+        draw_money()
     ins_row=[8] #insert coin
     ins1 = Button(root, text='1000원 투입',command=lambda :(add_cash(0)),width=10,height=1)
     ins1.grid(row=ins_row[0],column=1)
