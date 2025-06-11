@@ -1,2 +1,2 @@
-import Libs
-Libs.Display.__init__()
+import libs
+display = libs.Display
