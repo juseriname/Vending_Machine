@@ -27,40 +27,17 @@ class VendingMachine(Drink):
 
     def refund(self): #잔돈 반환
         temp = [0,0,0,0] #1000 500 100 50
+        money=[1000,500,100,50]
         if sum(self._SmallChange)==0: #기계에 잔돈이 없어용
             return -1
-        if self._cash >= self._SmallChange[0]*1000:
-            temp[0]=self._SmallChange[0]
-            self._cash-=self._SmallChange[0]*1000
-            self._SmallChange[0]=0
-        else:
-            temp[0] = self._cash//1000
-            self._cash %= 1000
-
-        if self._cash >= self._SmallChange[1] * 500:
-            temp[1] = self._SmallChange[1]
-            self._cash -= self._SmallChange[1] * 500
-            self._SmallChange[1] = 0
-        else:
-            temp[1] = self._cash // 500
-            self._cash %= 500
-
-        if self._cash >= self._SmallChange[2] * 100:
-            temp[2] = self._SmallChange[2]
-            self._cash -= self._SmallChange[2] * 100
-            self._SmallChange[2] = 0
-        else:
-            temp[2] = self._cash // 100
-            self._cash %= 100
-
-        if self._cash >= self._SmallChange[3] * 50:
-            temp[3] = self._SmallChange[3]
-            self._cash -= self._SmallChange[3] * 50
-            self._SmallChange[3] = 0
-        else:
-            temp[3] = self._cash // 50
-            self._cash %= 50
-        #print('_SmallChange: ',self._SmallChange)
+        for i in range(0,4):
+            if self._cash >= self._SmallChange[i] * money[i]:
+                temp[i] = self._SmallChange[i]
+                self._cash -= self._SmallChange[i] * money[i]
+                self._SmallChange[i] = 0
+            else:
+                temp[i] = self._cash // money[i]
+                self._cash %= money[i]
         return temp
 
     def get_cash(self): #현재 잔액 가져오기
