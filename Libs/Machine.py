@@ -68,11 +68,6 @@ class VendingMachine(Drink):
         else :
             return -1
 
-
-    def get_item_info(self,index):
-        temp = [self.items_list[index],self.items_price[index],self.items_count[index]]
-        return temp
-
     #관리자 페이지
     ##로그인
     def login(self,password):
